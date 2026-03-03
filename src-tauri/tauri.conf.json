@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "crewmatea350",
+  "version": "0.1.2",
+  "identifier": "crewmatea350",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist",
+    "removeUnusedCommands": true
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Crewmate INI A350",
+        "width": 325,
+        "height": 245,
+        "minWidth": 325,
+        "minHeight": 245,
+        "maximizable": false,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "createUpdaterArtifacts": true,
+    "targets": [
+      "msi"
+    ],
+    "externalBin": [
+      "bin/copilot_speech"
+    ],
+    "resources": [
+      "sounds",
+      "bin/libvosk.dll",
+      "bin/libgcc_s_seh-1.dll",
+      "bin/libstdc++-6.dll",
+      "bin/libwinpthread-1.dll"
+    ],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEI5RkZFQzJFQUMyQkRCOEYKUldTUDJ5dXNMdXovdVY0a3kwcG9aRGdCMGt0QlR0V2lYMkx6d3BVUkJZZFU5K0hRL1RZbHN5L0kK",
+      "endpoints": [
+        "https://github.com/marxio09dio/CrewMateA350/releases/latest/download/latest.json"
+      ]
+    }
+  }
+}
