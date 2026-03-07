@@ -10,6 +10,7 @@ import { flightControlsCheck } from "./commands/flight_controls_check"
 import { setFlightDirector } from "./commands/flight_director"
 import { setGearHandle } from "./commands/gear"
 import { setLandingLights } from "./commands/landing_lights"
+import { setStartAPU } from "./commands/apu"
 import { setStrobeLights } from "./commands/strobe_lights"
 import { setTaxiLights } from "./commands/taxi_lights"
 import { setWingAntiIce } from "./commands/wing_anti_ice"
@@ -60,6 +61,17 @@ export function createVoiceCommands(): VoiceCommand[] {
       action: () => setFlaps(4),
       description: "Set flaps to 4/full"
     },
+
+    // APU Commands
+    {
+      phrases: ["start the apu please", "start the apu", "start apu", "start apu please"],
+      action: () => {
+        playSound("check.ogg")
+        setStartAPU(1)
+      },
+      description: "Start the APU"
+    },
+    
     // anti ice commands
     {
       phrases: ["Engine anti ice on", "Engine anti-ice on", "Engine anti ice please", "Engine anti-ice please"],

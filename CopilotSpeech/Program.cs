@@ -507,5 +507,9 @@ class Program
             "starting engine two",
             "starting engine number two",
             "config",
+            "start the apu please",
+            "start the apu",
+            "start apu",
+            "start apu please",
         };
 }
