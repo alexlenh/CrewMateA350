@@ -11,8 +11,8 @@
     {
       "label": "Logo Lights",
       "read": "(L:INI_LIGHTS_LOGO)",
-      "on": "0 (>L:INI_LIGHTS_LOGO)",
-      "expect": 0
+      "on": "1 (>L:INI_LIGHTS_LOGO)",
+      "expect": 1
     },
     {
       "label": "Nose Wheel Light",
