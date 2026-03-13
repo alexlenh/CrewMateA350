@@ -17,7 +17,7 @@
 
 ## Quick Links
 
-- [Contribution Guidelines](.github/CONTRIBUTING.md)
+- [Contribution Guidelines](.github/Contributing.md)
 - [License](LICENSE)
 
 ---
@@ -68,13 +68,13 @@
 
 ## Reporting Bugs & Requesting Features
 
-If you encounter a problem or want to request a new feature, please [open an issue](https://github.com/your-org/your-repo/issues).
+If you encounter a problem or want to request a new feature, please [open an issue](https://github.com/marxio09dio/CrewMateA350/issues).
 
 ---
 
 ## Want to Contribute?
 
-Contributions are welcome! Check out the [Contribution Guidelines](.github/CONTRIBUTING.md) to get started.
+Contributions are welcome! Check out the [Contribution Guidelines](.github/Contributing.md) to get started.
 
 ## License
 

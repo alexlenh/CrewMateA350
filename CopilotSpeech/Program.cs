@@ -337,6 +337,8 @@ partial class Program
                 "set altimeter ",
                 "set flight level ",
                 "set missed approach altitude ",
+                "pull heading ",
+                "pull speed ",
             }
         )
         {
