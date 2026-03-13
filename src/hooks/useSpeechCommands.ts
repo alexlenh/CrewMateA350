@@ -1,6 +1,7 @@
 import { listen } from "@tauri-apps/api/event"
 import { useEffect, useRef, useState } from "react"
 
+import { playSound } from "@/services/playSounds"
 import { useChecklistStore } from "@/store/checklistStore"
 import { createVoiceCommands, numericPrefixCommands } from "@/voice/voiceCommands"
 
@@ -65,6 +66,48 @@ export function useSpeechCommands({ voiceEnabled }: UseSpeechCommandsOptions) {
           }
           return
         }
+      }
+
+      // Airbus FMA callout (e.g. "man toga srs runway", "loc blue gs blue", "nav").
+      const FMA_PREFIXES = [
+        "man ",
+        "thr ",
+        "thrust ",
+        "alpha ",
+        "toga ",
+        "speed",
+        "mach",
+        "srs",
+        "clb",
+        "climb",
+        "op clb",
+        "exp clb",
+        "alt",
+        "altitude",
+        "des",
+        "descent",
+        "op des",
+        "exp des",
+        "vs",
+        "fpa",
+        "gs",
+        "glide ",
+        "flare",
+        "rollout",
+        "land",
+        "nav",
+        "hdg",
+        "trk",
+        "loc",
+        "localiser",
+        "ga trk",
+        "runway",
+        "autothrust"
+      ]
+      if (FMA_PREFIXES.some((p) => spokenText.startsWith(p))) {
+        setIsValidCommand(true)
+        await playSound("check.ogg")
+        return
       }
     })
 
