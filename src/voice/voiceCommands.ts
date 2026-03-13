@@ -3,30 +3,24 @@ import { executeFlow } from "@/services/flowRunner"
 import { playSound } from "@/services/playSounds"
 import { usePreflightTimerStore } from "@/store/preflightTimerStore"
 
-import { setAltitudeDial } from "./commands/altitude"
-import { setSelAlt } from "./commands/altitude"
-import { setManagedAlt } from "./commands/altitude"
+import { setAltitudeDial, setManagedAlt, setSelAlt } from "./commands/altitude"
 import { setStartAPU } from "./commands/apu"
 import { setAutoPilot } from "./commands/autoPilot"
 import { setEngAntiIce } from "./commands/eng_anti_ice"
 import { setFlaps } from "./commands/flaps"
 import { flightControlsCheck } from "./commands/flight_controls_check"
-import { setFlightDirector } from "./commands/flight_director"
+import { setBird, setFlightDirector } from "./commands/flight_director"
 import { setGearHandle } from "./commands/gear"
 import { executeGoAround } from "./commands/goAround"
-import { setHeadingDial } from "./commands/heading"
-import { setSelHeading } from "./commands/heading"
-import { setManagedHeading } from "./commands/heading"
+import { setHeadingDial, setSelHeading, setManagedHeading } from "./commands/heading"
 import { setLandingLights } from "./commands/landing_lights"
 import { setSeatBelts } from "./commands/seat_belts"
-import { setStdBaro } from "./commands/setStdBaro"
-import { setAirspeedDial } from "./commands/speed"
-import { setSelSpeed } from "./commands/speed"
-import { setManagedSpeed } from "./commands/speed"
+import { setAirspeedDial, setManagedSpeed, setSelSpeed } from "./commands/speed"
 import { setStrobeLights } from "./commands/strobe_lights"
 import { setTaxiLights } from "./commands/taxi_lights"
 import { setWingAntiIce } from "./commands/wing_anti_ice"
 import { setWipers } from "./commands/wipers"
+import { setStdBaro } from "./commands/setStdBaro"
 
 interface VoiceCommand {
   phrases: string[]
@@ -51,11 +45,11 @@ export const numericPrefixCommands: Record<string, (value: number) => void | Pro
   "speed select ": (v) => setAirspeedDial(v),
   "pull heading ": (v) => {
     setSelHeading(1)
-    setSelHeading(v)
+    setHeadingDial(v)
   },
   "pull speed ": (v) => {
     setSelSpeed(1)
-    setSelSpeed(v)
+    setAirspeedDial(v)
   }
 }
 
@@ -307,7 +301,15 @@ export function createVoiceCommands(): VoiceCommand[] {
       },
       description: "Turns off flight director"
     },
-
+    {
+      phrases: ["flight director off bird on"],
+      action: () => {
+        playSound("check.ogg")
+        setFlightDirector(0)
+        setBird(1)
+      },
+      description: "Turns off flight director and turns on the bird (FPV)"
+    },
     // Autopilot Commands
     {
       phrases: ["auto pilot on", "auto pilot one on", "autopilot on", "autopilot one on"],

@@ -2,6 +2,7 @@ import { emit } from "@tauri-apps/api/event"
 import { getCurrentWindow } from "@tauri-apps/api/window"
 
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { usePerformanceStore } from "@/store/performanceStore"
 
@@ -10,8 +11,9 @@ export function LandingWindow() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
+    const parsedValue = name === "rwytrk" ? Number(value) : value
     setLandingData({ [name]: value } as Partial<typeof landing>)
-    const newLanding = { ...landing, [name]: value }
+    const newLanding = { ...landing, [name]: parsedValue }
     emit("landing-updated", newLanding)
   }
 
@@ -23,7 +25,7 @@ export function LandingWindow() {
     <div className="min-h-screen bg-black text-white p-4">
       <div className="space-y-4">
         {/* V Speeds */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1">
             <Label htmlFor="flaps" className="text-sm text-slate-300">
               Flaps Setting
@@ -38,6 +40,21 @@ export function LandingWindow() {
               <option value="3">3</option>
               <option value="4">Full</option>
             </select>
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="rwytrk" className="text-sm text-slate-300">
+              Runway Track
+            </Label>
+            <Input
+              type="number"
+              id="rwytrk"
+              name="rwytrk"
+              value={landing.rwytrk}
+              onChange={handleInputChange}
+              className="h-9 bg-slate-900/50 border-slate-600 text-white text-sm font-mono focus-visible:ring-cyan-500"
+              placeholder="150"
+            />
           </div>
 
           <div className="space-y-1">
@@ -57,6 +74,8 @@ export function LandingWindow() {
             </select>
           </div>
         </div>
+
+
 
         {/* Flaps */}
 
