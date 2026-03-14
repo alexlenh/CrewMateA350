@@ -13,27 +13,22 @@
   },
   {
     "minuteMark": 55,
-    "label": "Electrical power up",
+    "label": "Preliminary cockpit preparation",
     "type": "flow",
-    "flowId": "electric_power_up"
-  },
-  {
-    "minuteMark": 50,
-    "label": "Tech log / SD page cycle",
-    "type": "reminder"
+    "flowId": "prelim_cockpit_prep"
   },
   {
     "minuteMark": 40,
     "label": "PM walkaround",
     "type": "flow",
-    "flowId": "before_walkaround"
+    "flowId": "table_close"
   },
   {
     "minuteMark": 30,
-    "label": "PM back from walkaround",
+    "label": "PM back from walkaround and cockpit preparation",
     "type": "flow",
     "sound": "walkaround_completed.ogg",
-    "flowId": "table_open"
+    "flowId": "cockpit_prep"
   },
   {
     "minuteMark": 25,
