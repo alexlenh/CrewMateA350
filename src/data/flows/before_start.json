@@ -3,46 +3,34 @@
   "name": "Before Start",
   "steps": [
     {
-      "label": "Left Main Pump",
-      "read": "(L:INI_OUTER_TANK_LEFT)",
-      "on": "1 (>L:INI_OUTER_TANK_LEFT)",
-      "expect": 1
+      "label": "HUD Deploy",
+      "read": "(L:INI_HUD_RIGHT_STATE)",
+      "on": "1 (>L:INI_HUD_RIGHT_STATE)",
+      "expect": 1,
+      "only_if": {
+        "read": "(L:INI_IS_HUD)",
+        "one_of": [1]
+      }
     },
     {
-      "label": "Left STBY Pump",
-      "read": "(L:INI_INNER_TANK_LEFT)",
-      "on": "1 (>L:INI_INNER_TANK_LEFT)",
-      "expect": 1
+      "label": "HUD Uncover",
+      "read": "(L:INI_HUD_COVER_RIGHT)",
+      "on": "0 (>L:INI_HUD_COVER_RIGHT)",
+      "expect": 0,
+      "only_if": {
+        "read": "(L:INI_IS_HUD)",
+        "one_of": [1]
+      }
     },
     {
-      "label": "Left center Pump",
-      "read": "(L:INI_CENTER_TANK_LEFT)",
-      "on": "1 (>L:INI_CENTER_TANK_LEFT)",
-      "expect": 1
-    },
-    {
-      "label": "Right center Pump",
-      "read": "(L:INI_CENTER_TANK_RIGHT)",
-      "on": "1 (>L:INI_CENTER_TANK_RIGHT)",
-      "expect": 1
-    },
-    {
-      "label": "Right Main Pump",
-      "read": "(L:INI_INNER_TANK_RIGHT)",
-      "on": "1 (>L:INI_INNER_TANK_RIGHT)",
-      "expect": 1
-    },
-    {
-      "label": "Right STBY Pump",
-      "read": "(L:INI_OUTER_TANK_RIGHT)",
-      "on": "1 (>L:INI_OUTER_TANK_RIGHT)",
-      "expect": 1
-    },
-    {
-      "label": "Beacon",
-      "read": "(L:INI_LIGHTS_BEACON)",
-      "on": "1 (>L:INI_LIGHTS_BEACON)",
-      "expect": 1
+      "label": "HUD Bright on",
+      "read": "(L:INI_HUD_BRIGHTNESS_RIGHT",
+      "on": "70 (>L:INI_HUD_BRIGHTNESS_RIGHT)",
+      "expect": 70,
+      "only_if": {
+        "read": "(L:INI_IS_HUD)",
+        "one_of": [1]
+      }
     },
     {
       "label": "SURV MCDU",

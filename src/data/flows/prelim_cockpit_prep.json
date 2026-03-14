@@ -1,7 +1,37 @@
 {
-  "id": "electric_power_up",
-  "name": "Electric Power Up",
+  "id": "prelim_cockpit_prep",
+  "name": "Preliminary Cockpit Preparation",
   "steps": [
+    {
+      "label": "Battery volts check",
+      "read": "(L:INI_BATT_VOLTAGE_SELECTOR)",
+      "on": "0 (>L:INI_BATT_VOLTAGE_SELECTOR)",
+      "expect": 0
+    },
+      {
+      "label": "Battery volts check",
+      "read": "(L:INI_BATT_VOLTAGE_SELECTOR)",
+      "on": " 1 (>L:INI_BATT_VOLTAGE_SELECTOR)",
+      "expect": 1
+    },
+    {
+      "label": "Battery volts check",
+      "read": "(L:INI_BATT_VOLTAGE_SELECTOR)",
+      "on": "3 (>L:INI_BATT_VOLTAGE_SELECTOR)",
+      "expect": 3
+    },
+    {
+      "label": "Battery volts check",
+      "read": "(L:INI_BATT_VOLTAGE_SELECTOR)",
+      "on": "4 (>L:INI_BATT_VOLTAGE_SELECTOR)",
+      "expect": 4
+    },
+      {
+      "label": "Battery volts check complete",
+      "read": "(L:INI_BATT_VOLTAGE_SELECTOR)",
+      "on": "2 (>L:INI_BATT_VOLTAGE_SELECTOR)",
+      "expect": 2
+    },
     {
       "label": "Battery 1 Switch",
       "read": "(L:INI_BATTERY_1_SWITCH)",
@@ -90,28 +120,14 @@
       "expect": 65
     },
     {
-      "label": "Show Airports FO EFIS",
-      "read": "(L:INI_SHOW_AIRPORTS2)",
-      "on": "1 (>L:INI_SHOW_AIRPORTS2)",
-      "expect": 1
-    },
-    {
-      "label": "Show Constraints FO EFIS",
-      "read": "(L:INI_SHOW_CONSTRAINTS2)",
-      "on": "1 (>L:INI_SHOW_CONSTRAINTS2)",
-      "expect": 1
-    },
-    {
-      "label": "Show VOR1 FO EFIS",
-      "read": "(L:INI_FO_VOR1_ACTIVE)",
-      "on": "1 (>L:INI_FO_VOR1_ACTIVE)",
-      "expect": 1
-    },
-    {
-      "label": "Show VOR2 FO EFIS",
-      "read": "(L:INI_FO_VOR2_ACTIVE)",
-      "on": "1 (>L:INI_FO_VOR2_ACTIVE)",
-      "expect": 1
+      "label": "Dome on",
+      "read": "(L:INI_CKPT_LT_DOME)",
+      "on": "85 (>L:INI_CKPT_LT_DOME)",
+      "expect" : 85,
+      "only_if": {
+        "read": "(E:TIME OF DAY)",
+        "one_of": [0,3]
+      }
     }
   ]
 }
