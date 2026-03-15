@@ -48,24 +48,32 @@ partial class Program
     static IEnumerable<string> GetTakeoffFmaCallouts()
     {
         var athr = new List<string?> { "man toga" };
-        for (int t = 40; t <= 75; t++)
-            athr.Add($"man flex {t}");
+        foreach (var spoken in GetSpokenNumberWordForms(40, 75))
+            athr.Add($"man flex {spoken}");
 
         return BuildFmaCombos(
             athr,
             new[] { "srs" },
             new string?[] { null, "runway" },
-            new string?[] { null, "autothrust blue" }
+            new string?[] { null, "auto thrust blue" }
         );
     }
 
     // ─── Climb ───────────────────────────────────────────────────────────────
     static IEnumerable<string> GetClimbFmaCallouts() =>
         BuildFmaCombos(
-            new string?[] { null, "thrust d climb", "thrust climb", "speed", "mach" },
+            new string?[] { null, "thrust dee climb", "thrust climb", "speed", "mach" },
             new string?[] { "srs", "climb", "open climb", "expedite climb" },
             new string?[] { null, "runway", "nav", "heading", "track" },
-            new string?[] { null, "climb blue", "alt blue", "alt cruise star", "nav blue" }
+            new string?[]
+            {
+                null,
+                "climb blue",
+                "alt blue",
+                "alt cruise star",
+                "nav blue",
+                "auto thrust",
+            }
         );
 
     // ─── Cruise ──────────────────────────────────────────────────────────────
@@ -111,6 +119,7 @@ partial class Program
                 "glide slope blue",
                 "land blue",
                 "nav blue",
+                "auto thrust blue",
                 "alt blue",
             }
         );
@@ -121,7 +130,7 @@ partial class Program
             new string?[] { "man toga", "man mct" },
             new string?[] { "srs" },
             new string?[] { null, "nav", "heading", "track", "go around track" },
-            new string?[] { null, "climb blue", "alt blue", "nav blue" }
+            new string?[] { null, "climb blue", "alt blue", "nav blue", "auto thrust blue" }
         );
 
     // ─── Landing / Flare / Rollout ───────────────────────────────────────────
@@ -180,12 +189,10 @@ partial class Program
         var athr = new[]
         {
             "man toga",
-            "man mct",
-            "thr clb",
+            "auto thrust",
+            "thrust dee climb",
             "thrust climb",
-            "thr idle",
             "thrust idle",
-            "thr mct",
             "speed",
             "mach",
             "alpha floor",
@@ -206,7 +213,7 @@ partial class Program
             "glide slope star blue",
             "land blue",
             "nav blue",
-            "autothrust blue",
+            "auto thrust blue",
         };
 
         foreach (var t in vert)

@@ -325,6 +325,29 @@ partial class Program
             }
         }
 
+        // Natural number tons
+        if (text.EndsWith(" tons"))
+        {
+            var withoutTons = text[..^" tons".Length];
+
+            // decimal form: "[natural] point [digit] tons"
+            var pointIdx2 = withoutTons.IndexOf(" point ");
+            if (pointIdx2 >= 0)
+            {
+                var intWords = withoutTons[..pointIdx2];
+                var decWords = withoutTons[(pointIdx2 + 7)..];
+                var intNum = TryParseNaturalNumber(intWords);
+                var decNum = TryParseDigitSequence(decWords); // single digit word
+                if (intNum != null && decNum != null)
+                    return $"{intNum}.{decNum} tons";
+            }
+
+            // integer form: "[natural] tons"
+            var intNum2 = TryParseNaturalNumber(withoutTons);
+            if (intNum2 != null)
+                return $"{intNum2} tons";
+        }
+
         // Prefix patterns: "set altitude [digits]", "set heading [digits]", etc.
         foreach (
             var prefix in new[]
@@ -349,6 +372,66 @@ partial class Program
             var digits = TryParseDigitSequence(numberPart);
             if (digits != null)
                 return $"{prefix}{digits}"; // e.g. "set altitude 2000", "set heading 238"
+        }
+
+        // e.g. "set altitude four thousand five hundred" → "set altitude 4500"
+        string? matchedAltPrefix = null;
+        foreach (
+            var ap in new[] { "set altitude ", "altitude select ", "set missed approach altitude " }
+        )
+        {
+            if (text.StartsWith(ap))
+            {
+                matchedAltPrefix = ap;
+                break;
+            }
+        }
+        if (matchedAltPrefix != null)
+        {
+            var afterAlt = text[matchedAltPrefix.Length..];
+
+            // "[N] thousand [M] hundred"
+            var tIdx = afterAlt.IndexOf(" thousand ");
+            if (tIdx > 0 && afterAlt.EndsWith(" hundred"))
+            {
+                var tWords = afterAlt[..tIdx];
+                var hWords = afterAlt[(tIdx + " thousand ".Length)..^" hundred".Length];
+                var th = TryParseNaturalNumber(tWords);
+                var hu = TryParseNaturalNumber(hWords);
+                if (th != null && hu != null)
+                    return $"{matchedAltPrefix}{int.Parse(th) * 1000 + int.Parse(hu) * 100}";
+            }
+
+            // "[N] thousand"
+            if (afterAlt.EndsWith(" thousand"))
+            {
+                var tWords = afterAlt[..^" thousand".Length];
+                var th = TryParseNaturalNumber(tWords);
+                if (th != null)
+                    return $"{matchedAltPrefix}{int.Parse(th) * 1000}";
+            }
+        }
+
+        // "man flex [natural number] [optional FMA modes]"
+        if (text.StartsWith("man flex "))
+        {
+            var afterFlex = text["man flex ".Length..];
+            var words = afterFlex.Split(' ');
+
+            // Try two-word natural number first ("fifty six"), then one-word ("fifty")
+            foreach (var wordCount in new[] { 2, 1 })
+            {
+                if (words.Length < wordCount)
+                    continue;
+
+                var numWords = string.Join(" ", words.Take(wordCount));
+                var num = TryParseNaturalNumber(numWords);
+                if (num != null)
+                {
+                    var tail = string.Join(" ", words.Skip(wordCount));
+                    return tail.Length > 0 ? $"man flex {num} {tail}" : $"man flex {num}";
+                }
+            }
         }
 
         return null;
